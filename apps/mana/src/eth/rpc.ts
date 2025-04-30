@@ -1,31 +1,14 @@
 import {
   clients,
-  evmApe,
-  evmArbitrum,
-  evmBase,
-  evmCurtis,
-  evmMainnet,
-  evmMantle,
-  EvmNetworkConfig,
-  evmOptimism,
-  evmPolygon,
-  evmSepolia
+  seiV2
 } from '@snapshot-labs/sx';
 import fetch from 'cross-fetch';
 import { Response } from 'express';
 import { createWalletProxy } from './dependencies';
 import { rpcError, rpcSuccess } from '../utils';
 
-export const NETWORKS = new Map<number, EvmNetworkConfig>([
-  [10, evmOptimism],
-  [137, evmPolygon],
-  [8453, evmBase],
-  [5000, evmMantle],
-  [42161, evmArbitrum],
-  [1, evmMainnet],
-  [33139, evmApe],
-  [33111, evmCurtis],
-  [11155111, evmSepolia]
+export const NETWORKS = new Map([
+  [1317, seiV2]
 ]);
 
 export const createNetworkHandler = (chainId: number) => {
@@ -38,7 +21,6 @@ export const createNetworkHandler = (chainId: number) => {
     networkConfig,
     whitelistServerUrl: 'https://wls.snapshot.box'
   });
-  const l1ExecutorClient = new clients.L1Executor();
 
   async function send(id: number, params: any, res: Response) {
     try {
@@ -145,49 +127,10 @@ export const createNetworkHandler = (chainId: number) => {
     }
   }
 
-  async function executeStarknetProposal(
-    id: number,
-    params: any,
-    res: Response
-  ) {
-    try {
-      const {
-        space,
-        executor,
-        proposalId,
-        proposal,
-        votesFor,
-        votesAgainst,
-        votesAbstain,
-        executionHash,
-        transactions
-      } = params;
-      const signer = getWallet(space);
-
-      const receipt = await l1ExecutorClient.execute({
-        signer,
-        space,
-        executor,
-        proposalId,
-        proposal,
-        votesFor,
-        votesAgainst,
-        votesAbstain,
-        executionHash,
-        transactions
-      });
-
-      return rpcSuccess(res, receipt, id);
-    } catch (e) {
-      return rpcError(res, 500, e, id);
-    }
-  }
-
   return {
     send,
     finalizeProposal,
     execute,
-    executeQueuedProposal,
-    executeStarknetProposal
+    executeQueuedProposal
   };
 };

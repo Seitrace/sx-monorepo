@@ -15,7 +15,7 @@ export function getEthereumWallet(mnemonic: string, index: number) {
 export const createWalletProxy = (mnemonic: string, chainId: number) => {
   const signers = new Map<string, Wallet>();
   const provider = new StaticJsonRpcProvider(
-    `https://rpc.snapshot.org/${chainId}`,
+    'https://snowy-solitary-patron.sei-pacific.quiknode.pro/b85f33628bfb46d8a184419284f47270a24b4488/',
     chainId
   );
 

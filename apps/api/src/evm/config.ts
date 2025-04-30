@@ -8,7 +8,7 @@ import Space from './abis/Space.json';
 type NetworkID = 'sei';
 
 const START_BLOCKS: Record<NetworkID, number> = {
-  sei: 1329
+  sei: 144776533
 };
 
 const RPC_URLS: Record<NetworkID, string> = {
