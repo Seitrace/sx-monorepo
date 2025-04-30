@@ -1,8 +1,6 @@
 import { CheckpointConfig } from '@snapshot-labs/checkpoint';
 import { evmNetworks } from '@snapshot-labs/sx';
 import AxiomExecutionStrategy from './abis/AxiomExecutionStrategy.json';
-import L1AvatarExecutionStrategy from './abis/L1AvatarExecutionStrategy.json';
-import L1AvatarExecutionStrategyFactory from './abis/L1AvatarExecutionStrategyFactory.json';
 import ProxyFactory from './abis/ProxyFactory.json';
 import SimpleQuorumTimelockExecutionStrategy from './abis/SimpleQuorumTimelockExecutionStrategy.json';
 import Space from './abis/Space.json';
@@ -10,7 +8,7 @@ import Space from './abis/Space.json';
 type NetworkID = 'sei';
 
 const START_BLOCKS: Record<NetworkID, number> = {
-  sei: 144774693
+  sei: 1329
 };
 
 const RPC_URLS: Record<NetworkID, string> = {
@@ -155,24 +153,13 @@ export function createConfig(indexerName: NetworkID): FullConfig {
             fn: 'handleAxiomWriteOffchainVotes'
           }
         ]
-      },
-      L1AvatarExecutionStrategy: {
-        abi: 'L1AvatarExecutionStrategy',
-        events: [
-          {
-            name: 'ProposalExecuted(uint256,uint256)',
-            fn: 'handleStarknetProposalExecuted'
-          }
-        ]
       }
     },
     abis: {
       ProxyFactory,
       Space,
       SimpleQuorumTimelockExecutionStrategy,
-      AxiomExecutionStrategy,
-      L1AvatarExecutionStrategy,
-      L1AvatarExecutionStrategyFactory
+      AxiomExecutionStrategy
     }
   };
 }
