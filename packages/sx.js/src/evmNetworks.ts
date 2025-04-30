@@ -108,31 +108,7 @@ function createEvmConfig(
 }
 
 export const evmNetworks = {
-  eth: createStandardConfig(1),
-  oeth: createStandardConfig(10),
-  sep: createStandardConfig(11155111, {
-    // executionStrategies: {
-    //   Axiom: '0xaC6dbd42Ed254E9407fe0D2798784d0110979DC2',
-    //   Isokratia: '0xc674eCf233920aa3052738BFCDbDd0812AEE5A83'
-    // }
-  }),
-  matic: createStandardConfig(137),
-  arb1: createStandardConfig(42161),
-  base: createStandardConfig(8453),
-  mnt: createStandardConfig(5000, {
-    // https://docs.mantle.xyz/network/system-information/fee-mechanism/eip-1559-support#application-of-eip-1559-in-mantle-v2-tectonic
-    maxPriorityFeePerGas: 0
-  }),
-  ape: createStandardConfig(33139),
-  curtis: createStandardConfig(33111)
+  sei: createStandardConfig(1317),
 } as const;
 
-export const evmMainnet = createEvmConfig('eth');
-export const evmSepolia = createEvmConfig('sep');
-export const evmOptimism = createEvmConfig('oeth');
-export const evmPolygon = createEvmConfig('matic');
-export const evmArbitrum = createEvmConfig('arb1');
-export const evmBase = createEvmConfig('base');
-export const evmMantle = createEvmConfig('mnt');
-export const evmApe = createEvmConfig('ape');
-export const evmCurtis = createEvmConfig('curtis');
+export const seiV2 = createEvmConfig('sei');

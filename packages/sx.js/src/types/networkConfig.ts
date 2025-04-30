@@ -115,5 +115,5 @@ export type EvmNetworkConfig = Omit<
 };
 
 export type OffchainNetworkConfig = {
-  eip712ChainId: 1 | 5;
+  eip712ChainId: 1317;
 };

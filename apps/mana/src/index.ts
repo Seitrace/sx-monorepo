@@ -3,12 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import { PORT } from './constants';
 import ethRpc from './eth';
-import starkRpc from './stark';
 import pkg from '../package.json';
-import {
-  registeredProposalsLoop,
-  registeredTransactionsLoop
-} from './stark/registered';
 
 const app = express();
 
@@ -19,7 +14,6 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '4mb', extended: false }));
 app.use(cors({ maxAge: 86400 }));
 app.use('/eth_rpc', ethRpc);
-app.use('/stark_rpc', starkRpc);
 
 app.get('/', (req, res) =>
   res.json({
@@ -29,9 +23,6 @@ app.get('/', (req, res) =>
 );
 
 async function start() {
-  registeredTransactionsLoop();
-  registeredProposalsLoop();
-
   app.listen(PORT, () => console.log(`Listening at http://localhost:${PORT}`));
 }
 

@@ -7,27 +7,14 @@ import ProxyFactory from './abis/ProxyFactory.json';
 import SimpleQuorumTimelockExecutionStrategy from './abis/SimpleQuorumTimelockExecutionStrategy.json';
 import Space from './abis/Space.json';
 
-type NetworkID =
-  | 'eth'
-  | 'sep'
-  | 'oeth'
-  | 'matic'
-  | 'arb1'
-  | 'base'
-  | 'mnt'
-  | 'ape'
-  | 'curtis';
+type NetworkID = 'sei';
 
 const START_BLOCKS: Record<NetworkID, number> = {
-  eth: 18962278,
-  sep: 4519171,
-  oeth: 118359200,
-  matic: 50858232,
-  arb1: 157825417,
-  base: 23524251,
-  mnt: 75662182,
-  ape: 12100384,
-  curtis: 16682282
+  sei: 144774693
+};
+
+const RPC_URLS: Record<NetworkID, string> = {
+  sei: 'https://snowy-solitary-patron.sei-pacific.quiknode.pro/b85f33628bfb46d8a184419284f47270a24b4488/'
 };
 
 export type FullConfig = {
@@ -59,20 +46,6 @@ export function createConfig(indexerName: NetworkID): FullConfig {
     }
   ];
 
-  if (indexerName === 'sep') {
-    sources.push({
-      contract: '0x27981a29ec87f2fbf873a2dcb0325405648ffce1',
-      start: 6106288,
-      abi: 'L1AvatarExecutionStrategyFactory',
-      events: [
-        {
-          name: 'ContractDeployed(address)',
-          fn: 'handleL1AvatarExecutionContractDeployed'
-        }
-      ]
-    });
-  }
-
   return {
     indexerName,
     chainId: network.Meta.eip712ChainId,
@@ -85,7 +58,7 @@ export function createConfig(indexerName: NetworkID): FullConfig {
       propositionPowerValidationStrategyAddress:
         network.ProposalValidations.VotingPower
     },
-    network_node_url: `https://rpc.snapshot.org/${network.Meta.eip712ChainId}`,
+    network_node_url: RPC_URLS[indexerName],
     sources,
     templates: {
       Space: {

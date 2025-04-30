@@ -24,7 +24,6 @@ import {
   updateUserTypes,
   weightedVoteTypes
 } from './types';
-import { offchainGoerli } from '../../../offchainNetworks';
 import { OffchainNetworkConfig, SignatureData } from '../../../types';
 import {
   CancelProposal,
@@ -57,14 +56,16 @@ import {
 } from '../types';
 import { encryptChoices } from '../utils';
 
+const defaultNetwork: OffchainNetworkConfig = {
+  eip712ChainId: 1317
+};
+
 const SEQUENCER_URLS: Record<OffchainNetworkConfig['eip712ChainId'], string> = {
-  1: 'https://seq.snapshot.org',
-  5: 'https://testnet.seq.snapshot.org'
+  1317: 'https://seq.snapshot.org'
 };
 
 const RELAYER_URLS: Record<OffchainNetworkConfig['eip712ChainId'], string> = {
-  1: 'https://relayer.snapshot.org',
-  5: 'https://testnet.seq.snapshot.org' // no relayer for testnet
+  1317: 'https://relayer.snapshot.org'
 };
 
 type EthereumSigClientOpts = {
@@ -77,7 +78,7 @@ export class EthereumSig {
   networkConfig: OffchainNetworkConfig;
 
   constructor(opts?: EthereumSigClientOpts) {
-    this.networkConfig = opts?.networkConfig || offchainGoerli;
+    this.networkConfig = opts?.networkConfig || defaultNetwork;
     this.sequencerUrl =
       opts?.sequencerUrl || SEQUENCER_URLS[this.networkConfig.eip712ChainId];
   }

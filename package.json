@@ -6,15 +6,17 @@
     "type": "git",
     "url": "git@github.com:snapshot-labs/sx-monorepo.git"
   },
-  "type": "module",
   "scripts": {
-    "dev": "turbo run dev --filter=!mana --filter=!api",
-    "dev:interactive": "node --experimental-strip-types --no-warnings=ExperimentalWarning ./scripts/dev-interactive.ts",
+    "dev": "yarn dev:all",
+    "dev:all": "concurrently \"yarn dev:api\" \"yarn dev:mana\"",
+    "dev:api": "cd apps/api && yarn install && ts-node --transpile-only src/index.ts",
+    "dev:mana": "cd apps/mana && yarn install && ts-node --transpile-only src/index.ts",
+    "dev:interactive": "DEBUG=@inquirer* node scripts/dev-interactive.js",
     "build": "turbo run build",
     "test": "turbo run test",
     "test:integration": "turbo run test:integration",
     "lint": "turbo run lint lint:scripts",
-    "lint:scripts": "eslint scripts/ --ext .ts",
+    "lint:scripts": "eslint scripts/ --ext .ts,.js",
     "typecheck": "turbo run typecheck",
     "release": "yarn build && changeset publish"
   },
@@ -27,8 +29,12 @@
     "@inquirer/prompts": "^7.4.0",
     "@snapshot-labs/eslint-config": "^0.1.0-beta.21",
     "@snapshot-labs/prettier-config": "^0.1.0-beta.19",
+    "@types/node": "^18.11.6",
+    "concurrently": "^8.2.2",
+    "debug": "^4.3.4",
     "eslint": "^8.57.0",
     "prettier": "^3.1.0",
+    "ts-node": "^10.9.1",
     "turbo": "^2.4.0",
     "typescript": "^5.8.3"
   },
@@ -45,5 +51,8 @@
       "**/@graphprotocol/graph-ts",
       "**/assemblyscript"
     ]
+  },
+  "dependencies": {
+    "@types/flexsearch": "^0.7.42"
   }
 }

@@ -1,13 +1,8 @@
-import { execSync, fork } from 'child_process';
-import path from 'path';
-import { checkbox } from '@inquirer/prompts';
+const { execSync, fork } = require('child_process');
+const path = require('path');
+const { checkbox } = require('@inquirer/prompts');
 
-type ServiceType = 'ui' | 'api' | 'mana';
-type Service = {
-  env: Record<string, string>;
-};
-
-const SERVICES: Record<ServiceType, Service> = {
+const SERVICES = {
   ui: {
     env: {}
   },
@@ -28,7 +23,7 @@ const SERVICES: Record<ServiceType, Service> = {
 
 const DOCKER_CMD = `docker compose -f scripts/docker-compose.yml up -d`;
 
-function runTurboWithFilters(serviceTypes: ServiceType[]) {
+function runTurboWithFilters(serviceTypes) {
   const turboPath = path.resolve('node_modules', '.bin', 'turbo');
   const filterArgs = serviceTypes.flatMap(filter => [
     '--filter',
@@ -65,14 +60,17 @@ function runTurboWithFilters(serviceTypes: ServiceType[]) {
 
 async function run() {
   try {
+    console.log('Starting interactive development script...');
     const answer = await checkbox({
       message: 'Select services to run locally',
       choices: [
-        { name: 'UI', value: 'ui' as const },
-        { name: 'API (only sei)', value: 'api' as const },
-        { name: 'Mana', value: 'mana' as const }
+        { name: 'UI', value: 'ui' },
+        { name: 'API (only sei)', value: 'api' },
+        { name: 'Mana', value: 'mana' }
       ]
     });
+
+    console.log('Selected services:', answer);
 
     if (answer.includes('api') || answer.includes('mana')) {
       console.log('Starting Docker for backend services...');
@@ -85,8 +83,10 @@ async function run() {
       process.exit(0);
     }
 
+    console.log('Starting services with Turbo...');
     runTurboWithFilters(answer);
-  } catch {
+  } catch (error) {
+    console.error('Error running script:', error);
     process.exit(1);
   }
 }
