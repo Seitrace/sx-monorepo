@@ -7,7 +7,6 @@ import {
   RECENT_CONNECTOR
 } from '@/helpers/constants';
 import { formatAddress, lsGet, lsRemove, lsSet } from '@/helpers/utils';
-import { STARKNET_CONNECTORS } from '@/networks/common/constants';
 import { Connector } from '@/networks/types';
 import { ChainId } from '@/types';
 
@@ -128,14 +127,6 @@ export function useWeb3() {
           const { chainId: safeChainId, safeAddress } = web3.provider.safe;
           network = { chainId: safeChainId };
           accounts = [safeAddress];
-        } else if (STARKNET_CONNECTORS.includes(connector.type)) {
-          network = {
-            chainId:
-              connector.provider.chainId ||
-              connector.provider.provider.chainId ||
-              connector.provider.provider.provider.chainId
-          };
-          accounts = [connector.provider.selectedAddress];
         } else {
           [network, accounts] = await Promise.all([
             web3.getNetwork(),
@@ -192,12 +183,6 @@ export function useWeb3() {
       state.account = formatAddress(accounts[0]);
       await login(connector);
     });
-
-    if (!STARKNET_CONNECTORS.includes(connector.type)) {
-      connector.provider.on('chainChanged', async chainId => {
-        handleChainChanged(parseInt(formatUnits(chainId, 0)));
-      });
-    }
 
     if (connector.type === 'walletconnect') {
       connector.provider.on('disconnect', async () => {

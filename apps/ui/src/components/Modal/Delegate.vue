@@ -5,11 +5,9 @@ import { clone, getUrl } from '@/helpers/utils';
 import { getValidator } from '@/helpers/validation';
 import {
   EVM_CONNECTORS,
-  STARKNET_CONNECTORS
 } from '@/networks/common/constants';
-import { METADATA as STARKNET_NETWORK_METADATA } from '@/networks/starknet';
 import { Connector, ConnectorType } from '@/networks/types';
-import { ChainId, Space, SpaceMetadataDelegation } from '@/types';
+import { Space, SpaceMetadataDelegation } from '@/types';
 
 const DEFAULT_FORM_STATE = {
   delegatee: '',
@@ -105,13 +103,7 @@ function delegationConnectors(
 ): ConnectorType[] {
   if (!delegation.chainId) return [];
 
-  const starknetChainIds: ChainId[] = Object.values(
-    STARKNET_NETWORK_METADATA
-  ).map(network => network.chainId);
-
-  return starknetChainIds.includes(delegation.chainId)
-    ? STARKNET_CONNECTORS
-    : EVM_CONNECTORS;
+  return EVM_CONNECTORS
 }
 
 function isDelegationSupportedByUser(
@@ -134,19 +126,7 @@ function getNetworkDetails(chainId: number | string) {
   if (typeof chainId === 'number') {
     return networks[chainId];
   }
-
-  const starknetNetwork = Object.entries(STARKNET_NETWORK_METADATA).find(
-    ([, { chainId: starknetChainId }]) => starknetChainId === chainId
-  )?.[0];
-
-  if (!starknetNetwork) {
-    return { name: 'Unknown network', logo: '' };
-  }
-
-  return {
-    name: STARKNET_NETWORK_METADATA[starknetNetwork].name,
-    logo: STARKNET_NETWORK_METADATA[starknetNetwork].avatar
-  };
+  return { name: 'Unknown network', logo: '' };
 }
 
 async function handleSubmit() {
@@ -258,7 +238,7 @@ watchEffect(async () => {
       type="danger"
     >
       Please connect with
-      {{ auth.connector.type === 'argentx' ? 'an EVM' : 'a Starknet' }} wallet.
+      {{'an EVM' }} wallet.
     </UiMessage>
     <UiMessage
       v-else-if="isInvalidSelectedDelegation"

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { getUrl } from '@/helpers/utils';
 import { enabledNetworks, getNetwork } from '@/networks';
-import { METADATA as STARKNET_NETWORK_METADATA } from '@/networks/starknet';
 import { BaseDefinition, NetworkID } from '@/types';
 
 const network = defineModel<string | number | null>({
@@ -45,26 +44,6 @@ const options = computed(() => {
 
     return [
       ...baseNetworks,
-      ...Object.values(STARKNET_NETWORK_METADATA)
-        .filter(metadata => {
-          if (
-            props.definition.networkId === 's' &&
-            metadata.name.includes('Sepolia')
-          ) {
-            return false;
-          }
-
-          return true;
-        })
-        .map(metadata => ({
-          id: metadata.chainId,
-          name: metadata.name,
-          icon: h('img', {
-            src: getUrl(metadata.avatar),
-            alt: metadata.name,
-            class: 'rounded-full'
-          })
-        }))
     ];
   }
 

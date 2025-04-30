@@ -10,7 +10,7 @@ import {
   StrategyConfig
 } from '@/networks/types';
 import { Choice, Space } from '@/types';
-import { EVM_CONNECTORS, STARKNET_CONNECTORS } from './constants';
+import { EVM_CONNECTORS } from './constants';
 
 type SpaceExecutionData = Pick<Space, 'executors' | 'executors_types'>;
 type ExecutorType = Parameters<typeof _getExecutionData>[0];
@@ -131,7 +131,6 @@ export function createStrategyPicker({
         let connectors: ConnectorType[] = [];
         if (relayerType && ['evm', 'evm-tx'].includes(relayerType))
           connectors = EVM_CONNECTORS;
-        else if (relayerType === 'starknet') connectors = STARKNET_CONNECTORS;
         else connectors = managerConnectors;
 
         return {

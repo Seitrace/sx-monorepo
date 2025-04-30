@@ -29,42 +29,15 @@ export const ETH_CONTRACT = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
 export const CHAIN_IDS: Record<Exclude<NetworkID, 's' | 's-tn'>, ChainId> = {
   // EVM
-  eth: 1,
-  oeth: 10,
-  matic: 137,
-  base: 8453,
-  arb1: 42161,
-  mnt: 5000,
-  ape: 33139,
-  curtis: 33111,
-  sep: 11155111,
-  // Starknet
-  sn: '0x534e5f4d41494e',
-  'sn-sep': '0x534e5f5345504f4c4941'
+  sei: 1329
 };
 
 export const COINGECKO_ASSET_PLATFORMS = {
-  1: 'ethereum',
-  10: 'optimistic-ethereum',
-  100: 'xdai',
-  137: 'polygon-pos',
-  5000: 'mantle',
-  8453: 'base',
-  42161: 'arbitrum-one',
-  33139: 'ethereum',
-  33111: 'apechain'
+  1329: 'sei-network',
 };
 
 export const COINGECKO_BASE_ASSETS = {
-  1: 'ethereum',
-  10: 'ethereum',
-  100: 'xdai',
-  137: 'matic-network',
-  5000: 'mantle',
-  8453: 'ethereum',
-  42161: 'ethereum',
-  33139: 'apecoin',
-  33111: 'apecoin'
+  1329: 'sei-network',
 };
 
 export const MAX_SYMBOL_LENGTH = 12;

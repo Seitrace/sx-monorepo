@@ -3,7 +3,6 @@ import { getDelegationNetwork } from '@/helpers/delegation';
 import { registerTransaction } from '@/helpers/mana';
 import { isUserAbortError } from '@/helpers/utils';
 import { getNetwork, getReadWriteNetwork, metadataNetwork } from '@/networks';
-import { STARKNET_CONNECTORS } from '@/networks/common/constants';
 import { Connector, ExecutionInfo, StrategyConfig } from '@/networks/types';
 import {
   ChainId,
@@ -21,12 +20,6 @@ import {
   VoteType
 } from '@/types';
 
-const offchainToStarknetIds: Record<string, NetworkID> = {
-  s: 'sn',
-  's-tn': 'sn-sep'
-};
-
-const starknetNetworkId = offchainToStarknetIds[metadataNetwork];
 
 export function useActions() {
   const uiStore = useUiStore();
@@ -175,9 +168,7 @@ export function useActions() {
     provider: Web3Provider;
   }) {
     const network = getNetwork(
-      STARKNET_CONNECTORS.includes(connector.type)
-        ? starknetNetworkId
-        : metadataNetwork
+        metadataNetwork
     );
 
     return alias.getAliasWallet(address =>
@@ -474,10 +465,6 @@ export function useActions() {
 
   async function finalizeProposal(proposal: Proposal) {
     if (!auth.value) return await forceLogin();
-
-    if (auth.value.connector.type === 'argentx')
-      throw new Error('ArgentX is not supported');
-
     const network = getReadWriteNetwork(proposal.network);
 
     await wrapPromise(
@@ -513,9 +500,6 @@ export function useActions() {
 
   async function vetoProposal(proposal: Proposal) {
     if (!auth.value) return await forceLogin();
-
-    if (auth.value.connector.type === 'argentx')
-      throw new Error('ArgentX is not supported');
 
     const network = getReadWriteNetwork(proposal.network);
 
@@ -677,6 +661,7 @@ export function useActions() {
     if (!delegation.chainId) throw new Error('Chain ID is missing');
 
     const actionNetwork = getDelegationNetwork(delegation.chainId);
+    if (!actionNetwork) throw new Error('Delegation network not found');
     const network = getReadWriteNetwork(actionNetwork);
 
     return network.actions.getDelegatee(delegation, delegator);

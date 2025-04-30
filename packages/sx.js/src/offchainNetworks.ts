@@ -7,3 +7,5 @@ function createStandardConfig(
     eip712ChainId
   };
 }
+
+export const offchainSei : OffchainNetworkConfig = createStandardConfig(1317);

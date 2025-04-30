@@ -1,5 +1,4 @@
 import { getNetwork, offchainNetworks } from '@/networks';
-import { STARKNET_CONNECTORS } from '@/networks/common/constants';
 import { NetworkID, Proposal, Vote } from '@/types';
 
 const VOTES_LIMIT = 1000;
@@ -25,7 +24,6 @@ export function useAccount() {
 
     // On starknet account, we don't load votes for offchain networks (unsupported)
     if (
-      STARKNET_CONNECTORS.includes(auth.value.connector.type) &&
       offchainNetworks.includes(networkId)
     )
       return;

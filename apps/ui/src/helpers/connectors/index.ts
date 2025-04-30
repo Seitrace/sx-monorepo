@@ -1,4 +1,3 @@
-import argentx from './argentx';
 import coinbase from './coinbase';
 import gnosis from './gnosis';
 import guest from './guest';
@@ -8,7 +7,6 @@ import unicorn from './unicorn';
 import walletconnect from './walletconnect';
 
 export default {
-  argentx,
   injected,
   walletconnect,
   sequence,

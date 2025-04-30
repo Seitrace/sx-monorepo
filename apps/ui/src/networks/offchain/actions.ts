@@ -4,8 +4,7 @@ import { Wallet } from '@ethersproject/wallet';
 import {
   clients,
   getOffchainStrategy,
-  offchainGoerli,
-  offchainMainnet,
+  offchainSei,
   OffchainNetworkConfig
 } from '@snapshot-labs/sx';
 import { setEnsTextRecord } from '@/helpers/ens';
@@ -55,8 +54,7 @@ type ReadOnlyExecutionPlugin = {
 };
 
 const CONFIGS: Record<number, OffchainNetworkConfig> = {
-  1: offchainMainnet,
-  5: offchainGoerli
+  1329: offchainSei,
 };
 
 export function createActions(

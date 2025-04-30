@@ -37,7 +37,6 @@ export type ProposalsFilter = {
   labels?: string[];
 } & Record<string, any>;
 export type ConnectorType =
-  | 'argentx'
   | 'injected'
   | 'walletconnect'
   | 'coinbase'
@@ -391,7 +390,7 @@ export type NetworkHelpers = {
   isAuthenticatorContractSupported(authenticator: string): boolean;
   getRelayerAuthenticatorType(
     authenticator: string
-  ): 'evm' | 'evm-tx' | 'starknet' | null;
+  ): 'evm' | 'evm-tx' | null;
   isStrategySupported(strategy: string): boolean;
   /**
    * Checks if the executor type is supported.

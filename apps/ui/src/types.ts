@@ -16,18 +16,7 @@ export type ProposalState =
 
 export type NetworkID =
   | 's'
-  | 's-tn'
-  | 'eth'
-  | 'matic'
-  | 'arb1'
-  | 'oeth'
-  | 'base'
-  | 'mnt'
-  | 'ape'
-  | 'curtis'
-  | 'sep'
-  | 'sn'
-  | 'sn-sep';
+  | 'sei';
 
 export type ChainId = number | string;
 

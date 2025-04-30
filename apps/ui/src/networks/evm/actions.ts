@@ -4,16 +4,8 @@ import { Provider, Web3Provider } from '@ethersproject/providers';
 import { formatBytes32String } from '@ethersproject/strings';
 import {
   clients,
-  evmApe,
-  evmArbitrum,
-  evmBase,
-  evmCurtis,
-  evmMainnet,
-  evmMantle,
   EvmNetworkConfig,
-  evmOptimism,
-  evmPolygon,
-  evmSepolia,
+  seiV2,
   getEvmStrategy
 } from '@snapshot-labs/sx';
 import { vote as highlightVote } from '@/helpers/highlight';
@@ -57,15 +49,7 @@ import {
 import { EDITOR_APP_NAME } from '../common/constants';
 
 const CONFIGS: Record<number, EvmNetworkConfig> = {
-  10: evmOptimism,
-  137: evmPolygon,
-  5000: evmMantle,
-  8453: evmBase,
-  42161: evmArbitrum,
-  1: evmMainnet,
-  33139: evmApe,
-  33111: evmCurtis,
-  11155111: evmSepolia
+  1329: seiV2,
 };
 
 export function createActions(
