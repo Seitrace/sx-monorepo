@@ -7,6 +7,7 @@
     "url": "git@github.com:snapshot-labs/sx-monorepo.git"
   },
   "scripts": {
+    "seed": "node scripts/seed-initial-data.js",
     "dev": "yarn dev:all",
     "dev:all": "concurrently \"yarn dev:api\" \"yarn dev:mana\"",
     "dev:api": "cd apps/api && yarn install && ts-node --transpile-only src/index.ts",

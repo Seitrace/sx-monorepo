@@ -9,16 +9,17 @@ import { createApi } from './api';
 import * as constants from './constants';
 
 const HUB_URLS: Partial<Record<NetworkID, string | undefined>> = {
-  s: 'https://hub.snapshot.org/graphql',
-  's-tn': 'https://testnet.hub.snapshot.org/graphql'
+  s: 'http://localhost:3001/',
 };
 export const SNAPSHOT_URLS: Partial<Record<NetworkID, string | undefined>> = {
   s: 'https://v1.snapshot.box',
-  's-tn': 'https://testnet.v1.snapshot.box'
 };
-const CHAIN_IDS: Partial<Record<NetworkID, 1 | 11155111>> = {
-  s: 1,
-  's-tn': 11155111
+
+
+
+
+const CHAIN_IDS: Partial<Record<NetworkID, 1329>> = {
+  s: 1329,
 };
 
 export function createOffchainNetwork(networkId: NetworkID): Network {

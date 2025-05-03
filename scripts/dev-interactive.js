@@ -11,7 +11,8 @@ const SERVICES = {
       ENABLED_NETWORKS: 'sei',
       VITE_ENABLED_NETWORKS: 'sei',
       VITE_METADATA_NETWORK: 'sei',
-      VITE_UNIFIED_API_TESTNET_URL: 'http://localhost:3000'
+      VITE_UNIFIED_API_TESTNET_URL: 'http://localhost:3000',
+      VITE_UNIFIED_API_URL: 'http://localhost:3000',
     }
   },
   mana: {

@@ -20,7 +20,6 @@ import {
   Proposal,
   Space,
   SpaceMetadataItem,
-  StarknetL1Execution,
   User,
   Vote
 } from '../../.checkpoint/models';
@@ -641,7 +640,7 @@ export function createWriters(config: FullConfig) {
       proposal.timelock_veto_guardian = null;
       proposal.timelock_delay = 0n;
       proposal.execution_strategy_type = 'none';
-    }
+    }``
 
     proposal.execution_ready = proposal.execution_strategy_type != 'Axiom';
 
@@ -1031,30 +1030,6 @@ export function createWriters(config: FullConfig) {
     });
   };
 
-  const handleStarknetProposalExecuted: evm.Writer = async ({
-    block,
-    tx,
-    event
-  }) => {
-    if (!event) return;
-
-    const rawSpace: BigNumber = event.args.space;
-    const rawProposalId: BigNumber = event.args.proposalId;
-
-    const space = rawSpace.toHexString();
-    const paddedSpace = `0x${space.replace('0x', '').padStart(64, '0')}`;
-    const proposalId = rawProposalId.toNumber();
-
-    const executionEntity = new StarknetL1Execution(
-      `${paddedSpace}/${proposalId}`,
-      config.indexerName
-    );
-    executionEntity.space = paddedSpace;
-    executionEntity.proposalId = proposalId;
-    executionEntity.created = block?.timestamp ?? getCurrentTimestamp();
-    executionEntity.tx = tx.hash;
-    await executionEntity.save();
-  };
 
   return {
     // ProxyFactory
@@ -1084,6 +1059,5 @@ export function createWriters(config: FullConfig) {
     // L1AvatarExecutionStrategyFactory
     handleL1AvatarExecutionContractDeployed,
     // L1AvatarExecutionStrategy
-    handleStarknetProposalExecuted
   };
 }
