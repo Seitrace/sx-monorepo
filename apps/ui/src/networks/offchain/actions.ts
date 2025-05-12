@@ -60,7 +60,7 @@ const CONFIGS: Record<number, OffchainNetworkConfig> = {
 export function createActions(
   constants: NetworkConstants,
   helpers: NetworkHelpers,
-  chainId: 1 | 11155111
+  chainId: 1329
 ): ReadOnlyNetworkActions {
   const networkConfig = CONFIGS[chainId];
 

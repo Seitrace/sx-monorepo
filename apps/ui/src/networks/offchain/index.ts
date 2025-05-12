@@ -85,7 +85,7 @@ export function createOffchainNetwork(networkId: NetworkID): Network {
 
   return {
     readOnly: true,
-    name: networkId === 's-tn' ? 'Snapshot (testnet)' : 'Snapshot',
+    name: 'Snapshot',
     avatar: '',
     currentUnit: 'second',
     chainId: l1ChainId,
